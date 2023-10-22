@@ -12,6 +12,6 @@ export class PrimeiraPaginaComponentComponent {
   ) { }
 
   moverparaSegundaPagina() {
-    this.router.navigate(["segunda-pagina"]);
+    this.router.navigate(["segunda-pagina"])
   }
 }
