@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProdutosService } from 'src/app/produtos.service';
-import { IProdutoCarrinho } from '../produtos';
+import { IProduto, IProdutoCarrinho } from '../produtos';
+import { NotificacaoService } from 'src/app/notificacao.service';
+import { CarrinhoService } from 'src/app/carrinho.service';  // Certifique-se de importar o CarrinhoService
 
 @Component({
   selector: 'app-detalhes-produto',
@@ -11,11 +13,12 @@ import { IProdutoCarrinho } from '../produtos';
 export class DetalhesProdutoComponent implements OnInit {
   produto: IProduto | undefined;
   quantidade = 1;
-  carrinhoService: any;
+
   constructor(
     private produtosService: ProdutosService,
     private route: ActivatedRoute,
-    private notificacaoServico: NotificacaoService
+    private notificacaoServico: NotificacaoService,
+    private carrinhoService: CarrinhoService  // Injete o CarrinhoService no construtor
   ) { }
 
   ngOnInit(): void {
@@ -25,11 +28,20 @@ export class DetalhesProdutoComponent implements OnInit {
   }
 
   adicionarAoCarrinho() {
-    this.notificacaoServico.notificar("o produto foi adicionado ao carrinho");
+    this.notificacaoServico.notificar("O produto foi adicionado ao carrinho");
+
+    // Remova o operador ? (opcional) da propriedade id no objeto produto
     const produto: IProdutoCarrinho = {
-      ...this.produto,
-      quantidade: this.quantidade
-    }
-    this.carrinhoService.adicionarAoCarrinhoo(produto);
+      quantidade: this.quantidade,
+      id: this.produto?.id || 0,  // Se o id for undefined, definimos como 0 (ou ajuste conforme sua lógica)
+      descricao: this.produto?.descricao || '',
+      preco: this.produto?.preco || 0,
+      descricaoPreco: this.produto?.descricaoPreco || '',
+      quantidadeEstoque: this.produto?.quantidadeEstoque || 0,
+      imagem: this.produto?.imagem || ''
+    };
+
+    this.carrinhoService.adicionarAoCarrinho(produto);
   }
+
 }

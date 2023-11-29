@@ -6,7 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './contato.component.html',
   styleUrls: ['./contato.component.css']
 })
-export class contatoComponent implements OnInit {
+export class ContatoComponent implements OnInit {
   formContato = this.fb.group({
     nome: ["", [
       Validators.minLength(4),
@@ -37,7 +37,7 @@ export class contatoComponent implements OnInit {
   }
 
   enviarFormulario() {
-    alert("A mensagem foi Enviada!");
+    alert('A mensagem foi Enviada!');
     this.formContato.reset();
   }
 }
