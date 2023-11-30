@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ContatoRoutingModule } from './contato-routing.module';
 import { ContatoComponent } from './contato.component';  // Correção no nome do componente
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskModule } from 'ngx-mask';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 @NgModule({
   declarations: [
     ContatoComponent
@@ -15,6 +15,10 @@ import { NgxMaskModule } from 'ngx-mask';
     ContatoRoutingModule,
     ReactiveFormsModule,
     NgxMaskModule.forRoot()
-  ]
+  ],
+   exports: [
+        NgxMaskModule
+    ],
+    providers: [],
 })
 export class ContatoModule { }
